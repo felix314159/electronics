@@ -43,6 +43,11 @@ DS18B20:
 
 volatile uint8_t wdt_woke = 0;
 
+// state
+bool alarm_active = false;
+uint8_t halfsec_ticks = 0;
+uint8_t heartbeat_ticks = 0;
+
 // -------------------- GPIO helpers --------------------
 
 static inline void led_on(void) {
@@ -65,12 +70,12 @@ static inline void buzzer_off(void) {
 
 static inline void ow_drive_low(void) {
     DDRB |= (1 << ONEWIRE_PIN);     // output
-    PORTB &= ~(1 << ONEWIRE_PIN);   // low
+    PORTB &= ~(1 << ONEWIRE_PIN);   // drive low
 }
 
 static inline void ow_release(void) {
     DDRB &= ~(1 << ONEWIRE_PIN);    // input
-    PORTB &= ~(1 << ONEWIRE_PIN);   // no pull-up; external 4.7k used
+    PORTB &= ~(1 << ONEWIRE_PIN);   // no internal pull-up
 }
 
 static inline uint8_t ow_read_pin(void) {
@@ -95,12 +100,12 @@ static uint8_t ow_reset_pulse(void) {
     return presence;
 }
 
-static void ow_write_bit(uint8_t bit) {
+static void ow_write_bit(uint8_t bitval) {
     uint8_t sreg = SREG;
     cli();
 
     ow_drive_low();
-    if (bit) {
+    if (bitval) {
         _delay_us(6);
         ow_release();
         _delay_us(64);
@@ -114,7 +119,7 @@ static void ow_write_bit(uint8_t bit) {
 }
 
 static uint8_t ow_read_bit(void) {
-    uint8_t bit;
+    uint8_t bitval;
     uint8_t sreg = SREG;
     cli();
 
@@ -123,12 +128,12 @@ static uint8_t ow_read_bit(void) {
     ow_release();
     _delay_us(9);
 
-    bit = ow_read_pin();
+    bitval = ow_read_pin();
 
     _delay_us(55);
     SREG = sreg;
 
-    return bit;
+    return bitval;
 }
 
 static void ow_write_byte(uint8_t value) {
@@ -159,12 +164,10 @@ static bool ds18b20_set_9bit_resolution(void) {
     ow_write_byte(DS18B20_CMD_SKIP_ROM);
     ow_write_byte(DS18B20_CMD_WRITE_SCRATCHPAD);
 
-    // TH register, TL register, config register
-    // TH/TL are unused here, so set both to 0
-    // config = 0x1F => 9-bit resolution
+    // TH, TL, config
     ow_write_byte(0x00);
     ow_write_byte(0x00);
-    ow_write_byte(0x1F);
+    ow_write_byte(0x1F);   // 9-bit
 
     return true;
 }
@@ -174,52 +177,50 @@ static bool ds18b20_read_temp_raw(int16_t *raw_out) {
         return false;
     }
 
-    // Start conversion
     ow_write_byte(DS18B20_CMD_SKIP_ROM);
     ow_write_byte(DS18B20_CMD_CONVERT_T);
 
-    // 9-bit conversion time max is about 94 ms
-    // Wait slightly longer for safety
+    // 9-bit conversion time max about 94 ms
     _delay_ms(100);
 
     if (!ow_reset_pulse()) {
         return false;
     }
 
-    // Read scratchpad
     ow_write_byte(DS18B20_CMD_SKIP_ROM);
     ow_write_byte(DS18B20_CMD_READ_SCRATCHPAD);
 
     uint8_t temp_lsb = ow_read_byte();
     uint8_t temp_msb = ow_read_byte();
 
-    // We ignore the rest of the scratchpad and CRC for simplicity
     *raw_out = (int16_t)((temp_msb << 8) | temp_lsb);
     return true;
 }
 
-// -------------------- Sleep / watchdog --------------------
+// -------------------- Watchdog / sleep --------------------
 
 ISR(WDT_vect) {
     wdt_woke = 1;
 }
 
 static void watchdog_init_500ms_interrupt(void) {
+    cli();
     MCUSR &= ~(1 << WDRF);
 
     // Timed sequence to change WDT settings
-    WDTCR |= (1 << WDCE) | (1 << WDE);
+    WDTCR = (1 << WDCE) | (1 << WDE);
 
-    // Interrupt mode only, approx 500 ms
-    // On ATtiny85, WDP2|WDP1 gives ~0.5 s
-    WDTCR = (1 << WDIE) | (1 << WDP2) | (1 << WDP1);
+    // Interrupt mode only, ~500 ms: WDP2 | WDP0
+    WDTCR = (1 << WDIE) | (1 << WDP2) | (1 << WDP0);
+    sei();
 }
 
 static void enter_powerdown_sleep(void) {
     set_sleep_mode(SLEEP_MODE_PWR_DOWN);
+
+    cli();
     sleep_enable();
 
-    // If supported by headers/toolchain, disable brown-out during sleep
     #ifdef sleep_bod_disable
     sleep_bod_disable();
     #endif
@@ -229,18 +230,15 @@ static void enter_powerdown_sleep(void) {
     sleep_disable();
 }
 
-// -------------------- Init --------------------
+// -------------------- Init helpers --------------------
 
 static void io_init(void) {
-    // LED output
     DDRB |= (1 << LED_PIN);
     led_off();
 
-    // Buzzer output
     DDRB |= (1 << BUZZER_PIN);
     buzzer_off();
 
-    // OneWire released (input)
     ow_release();
 }
 
@@ -258,64 +256,57 @@ static void low_power_init(void) {
     power_timer1_disable();
 }
 
-// -------------------- Main --------------------
+// -------------------- Arduino entry points --------------------
 
-int main(void) {
+void setup() {
     io_init();
     low_power_init();
     watchdog_init_500ms_interrupt();
-    sei();
 
-    // Configure DS18B20 to 9-bit resolution on startup.
-    // If this fails, the code still runs; later reads will determine if sensor is present.
+    // Configure sensor to 9-bit mode at startup.
+    // If this fails, later reads will simply fail silently.
     ds18b20_set_9bit_resolution();
+}
 
-    bool alarm_active = false;
-    uint8_t halfsec_ticks = 0;
-    uint8_t heartbeat_ticks = 0;
+void loop() {
+    enter_powerdown_sleep();
 
-    while (1) {
-        enter_powerdown_sleep();
+    if (!wdt_woke) {
+        return;
+    }
+    wdt_woke = 0;
 
-        if (!wdt_woke) {
-            continue;
-        }
-        wdt_woke = 0;
+    halfsec_ticks++;
+    heartbeat_ticks++;
 
-        halfsec_ticks++;
-        heartbeat_ticks++;
+    // If alarm is active, emit one short chirp every 500 ms tick
+    if (alarm_active) {
+        buzzer_on();
+        _delay_ms(100);
+        buzzer_off();
+    }
 
-        // If alarm is active, emit one short chirp every 500 ms tick
-        if (alarm_active) {
-            buzzer_on();
-            _delay_ms(100);
-            buzzer_off();
-        }
+    // Measure temperature every 1 second
+    if ((halfsec_ticks & 0x01) == 0) {
+        int16_t raw_temp;
 
-        // Measure temperature every 1 second (every 2 x 500 ms ticks)
-        if ((halfsec_ticks & 0x01) == 0) {
-            int16_t raw_temp;
-
-            if (ds18b20_read_temp_raw(&raw_temp)) {
-                if (!alarm_active && raw_temp >= ALARM_ON_RAW) {
-                    alarm_active = true;
-                } else if (alarm_active && raw_temp <= ALARM_OFF_RAW) {
-                    alarm_active = false;
-                }
-            } else {
-                // Sensor read failed.
-                // Current behavior: leave alarm state unchanged.
-                // Could be changed later to a dedicated fault alarm pattern.
+        if (ds18b20_read_temp_raw(&raw_temp)) {
+            if (!alarm_active && raw_temp >= ALARM_ON_RAW) {
+                alarm_active = true;
+            } else if (alarm_active && raw_temp <= ALARM_OFF_RAW) {
+                alarm_active = false;
             }
+        } else {
+            // sensor read failed: intentionally silent
         }
+    }
 
-        // Heartbeat LED once every 60 seconds:
-        // 60 s / 0.5 s = 120 ticks
-        if (heartbeat_ticks >= 120) {
-            led_on();
-            _delay_ms(15);
-            led_off();
-            heartbeat_ticks = 0;
-        }
+    // Heartbeat LED once every 60 s
+    // 60 s / 0.5 s = 120 ticks
+    if (heartbeat_ticks >= 120) {
+        led_on();
+        _delay_ms(15);
+        led_off();
+        heartbeat_ticks = 0;
     }
 }
