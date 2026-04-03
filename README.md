@@ -12,6 +12,9 @@
 * PWM fan speed control via attiny85 and bjt
 * Non-pwm fan speed control with 555 timer and mosfet
 
+## IR
+* Self-built TV remote (only on/off for now) for my Panasonic tv using attiny85 and IR LED
+
 ## Other
 
 ### rotary_encoder_led

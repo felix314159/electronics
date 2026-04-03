@@ -1,0 +1,53 @@
+# Parts needed
+
+* ATtiny85
+* IR LED (940 nm wavelength), i use TSAL6200
+* Button
+* 220 ohms resistor for led
+* 3x aa alkaline series battery holder for approx 4.5-5v power
+
+# Code ATtiny85 pin usage
+
+PB1 = IR output
+ATtiny85 physical pin 6
+PB2 = push button input
+ATtiny85 physical pin 7
+GND = physical pin 4
+VCC = physical pin 8
+
+# Wiring
+
+## ATtiny85
+
+* pin 8 to the breadboard +5 V rail
+* pin 4 to the breadboard GND rail
+
+
+## IR LED wiring
+
+Code sends on PB1, so wire the IR LED to pin 6.
+
+* Connect ATtiny85 pin 6 (PB1) to one end of a 100–220 ohm resistor
+* Connect the other end of that resistor to the anode of the IR LED
+* Connect the cathode of the IR LED to GND
+
+So the path is:
+
+PB1 (pin 6) -> resistor -> IR LED anode -> IR LED cathode -> GND
+
+## Push button wiring
+
+Because we use `pinMode(PUSH_BUTTON, INPUT_PULLUP)` the pin is normally held HIGH internally, and pressing the button should connect it to GND.
+
+So we wire it like this:
+
+* One side of the push button to ATtiny85 pin 7 (PB2)
+* The other side of the push button to GND
+
+So when the button is pressed, PB2 goes LOW.
+
+# How it works
+
+The ATtiny85 waits in the loop, PB2 is normally HIGH because of the internal pull-up.
+Pressing the button connects PB2 to GND, making it LOW.
+Then the code sends the Panasonic IR command through the IR LED on PB1.
