@@ -1,0 +1,59 @@
+# Parts required
+
+* ATtiny85
+* DS18B20 TO-92 temperature sensor (normal power mode, not parasite mode), we will be doing 1 hz measurements at 9-bit resolution. quick note about pinout when u stare at flat side and pins go down: left pin is gnd, middle pin is dq, right pin is vdd.
+* Active buzzer, 5 V compatible (our attiny firmware will use this like 100 ms beep, 400 ms silence, repeat)
+* 1x NPN transistor 2n2222
+* 1x 1 kΩ base resistor for the transistor
+* 1x 4.7 kΩ pull-up resistor for DS18B20 data line
+* 1x LED for heartbeat/status (blink for 10-20 ms once per 60s, so human can see device is still active without it being annoying or wasting too much energy)
+* 1x 22 kΩ LED resistor (low brightness)
+* 100 nF ceramic cap for decoupling across the supply near the ATtiny85
+* 10 µF bulk capacitor across power supply
+* ca 5v power source, here: battery holder for 3x AA alkaline in series with on/off switch
+
+Goal: attiny85 is sleeping most of the time and wakes up once per second to see if the buzzer should sound alarm. alarm treshold target here: 34 degrees celcius (hardcoded)
+in attiny firmware we will add a bit of hysteresis (e.g. start alarm at 34, but only stop at 33.5 or less).
+
+Note 1: Batteries should be far away from temp sensor, temp sensor should be close to fire hazard object we monitor
+Note 2: attiny programming tricks to disable unneeded features to save energy (e.g. disable unused peripherals, use sleep mode, 8 mhz clock, use its own internal oscillator)
+Note 3: If the temp sensor fails to measure, it will silently fail. It would be cleaner to add some specific buzzer pattern if these failures keep happening. But for this projects its overkill so we cba.
+
+# Wiring
+
+## Power source
+
+* Battery pack positive:  on/off switch input
+* on/off switch output:   main VCC rail
+* Battery pack negative:  main GND rail
+* add 10 microF cap between main GND rail and main vcc rail
+
+
+## Attiny
+
+* pin 2 (pb3):  22kΩ resistor to LED anode (long leg), led cathode to main ground rail
+* pin 3 (pb4)   1kΩ resistor to transistor base (middle pin)
+* pin 8 (VCC):  main VCC rail
+* pin 4 (GND):  main GND rail
+* 100 nF cap between pin 4 and pin 8 (physically close to the pins)
+
+## temp sensor
+
+* DS18B20 GND pin (left):       main GND rail
+* DS18B20 DATA pin (middle):    ATtiny85 pin 5 (PB0)
+* DS18B20 DATA pin (middle) also has 4.7kΩ resistor to main vcc rail
+* DS18B20 VDD pin (right):      main VCC rail
+
+## transistor (u stare at flat side of 2n2222. better double-check pinout for ur specific part)
+
+* left pin (emitter): goes to main gnd rail 
+* middle pin (base): 1kΩ resistor to attiny pin 3 
+* right pin (collector): goes to negative buzzer terminal
+
+## active buzzer
+
+* positive terminal: main vcc rail 
+* negative terminal: transistor collector
+
+When PB4 goes high, base current flows, transistor turns on, collector is pulled toward ground, and the buzzer sounds.
+You could even still isp program the attiny after soldering if u wanted to.

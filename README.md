@@ -19,3 +19,6 @@
 
 ### rotary_encoder_led
 * Use rotary encoder, attiny85 and sn74hc595 shift register to select one of four LEDs.
+
+## Temp Alarm
+* Attiny and DS18B20 powered active buzzer alarm that beeps at target temp or above (here 34 degrees celsius)
