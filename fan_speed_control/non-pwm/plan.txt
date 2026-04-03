@@ -1,0 +1,77 @@
+# Parts used
+
+* 12 V DC fan, 2-wire
+* Infineon IRLB4132PBF N-channel MOSFET
+* 555 timer
+* 10 kΩ potentiometer as the timing resistor
+* 1 kΩ resistor
+* 10 µF electrolytic capacitor
+* 10 nF capacitor for pin 5 decoupling
+* 100 Ω resistor in series with the MOSFET gate
+* 100 kΩ resistor from MOSFET gate to ground
+* 6× AA battery pack feeding a buck-boost converter, adjusted to 12 V output
+
+# Wiring
+
+## 555 wiring
+
+* Pin 1:  GND
+* Pin 8:  +12 V
+* Pin 4 (RESET):  Pin 8 / +12 V
+* Pin 5 (CONTROL):  10 nF capacitor:  GND
+* Pin 2 tied directly to Pin 6 (timing node)
+
+Timing network:
+* 10 µF electrolytic capacitor
+    * Positive leg:  timing node (pins 2+6)
+    * Negative leg:  GND
+
+* 1 kΩ resistor
+* one side:  Pin 8 / +12 V
+* other side:  Pin 7
+* 10 kΩ potentiometer
+* Wiper (middle leg):  timing node (pins 2+6)
+* One outer leg:  Pin 7
+* Other outer leg:  left unconnected
+
+That makes the pot act as the adjustable resistor between pin 7 and the timing node.
+
+## MOSFET and fan wiring
+
+This is our low-side switch.
+
+### IRLB4132PBF pinout
+
+With the flat front facing you and legs downward:
+
+left leg = Gate
+middle leg and metal tab = Drain
+right leg = Source
+
+
+### Connections
+
+Fan red wire:  +12 V
+Fan black wire:  MOSFET Drain
+MOSFET Source:  GND
+
+#### Gate drive
+
+555 pin 3 (output):  100 Ω resistor:  MOSFET Gate
+MOSFET Gate:  100 kΩ resistor:  GND
+
+
+As usually, all grounds in our circuit must be shared.
+
+# What this circuit is doing
+
+The 555 is configured as an astable oscillator.
+The 10 µF capacitor charges and discharges between the 555 thresholds.
+The 10 kΩ pot changes the timing.
+Pin 3 outputs a switching waveform.
+That waveform drives the IRLB4132PBF gate.
+The MOSFET rapidly switches the fan’s ground path on and off.
+The fan sees an average voltage/power level and changes speed.
+
+The only problem is that 'low fan speed' is not really possible here.
+You need certain speed to start the fan, and if u decrease too much it fully stops (basically u can go from full speed to still-pretty-fast, but no 'slow spin' mode possible here)

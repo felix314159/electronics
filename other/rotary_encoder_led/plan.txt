@@ -1,0 +1,54 @@
+# Goal
+
+Rotary Button can select one of four LEDs (green, red, yellow, blue) to be active (only one LED can be active at the same time).
+Pressing the rotary button does nothing (because we would be one attiny pin short).
+
+# Parts
+
+* Attiny85 (8 pins in total; Pin 1: PB5, Pin 2: PB3, Pin 3: PB4, Pin 4: Ground, Pin 5: PB0, Pin 6: PB1, Pin 7: PB2, Pin 8: VCC)
+* sn74hc595 shift register (16 pins in total; Pin 1: Q_B, Pin 2: Q_C, Pin 3: Q_D, Pin 4: Q_E, Pin 5: Q_F, Pin 6: Q_G, Pin 7: Q_H, Pin 8: GND, Pin 9: QH', Pin 10: SRCLR, Pin 11: SRCLK, Pin 12: RCLK, Pin 13: OE, Pin 14: SER, Pin 15: Q_A, Pin 16: VCC)
+* joyit COM KY 040 RE rotary encoder (5 pins: CLK, DT, SW, + (5V), GND)
+* 4x led (green, red, yellow, blue)
+* approx 5v power supply (e.g. 3x aa alkaline)
+* 4x 330 ohm resistor for LEDs
+* 2x 100 nF cap (attiny vcc/gnd, 74hc vcc/gnd)
+* 1x 10 microF cap across power rails
+
+# Wiring
+
+## Attiny 
+
+* Attiny Pin 2 with rotary encoder CLK
+* Attiny Pin 3 with rotary encoder DT
+* Attiny Pin 4 to breadboard gnd rail
+* Attiny Pin 5 with 74hc pin 14
+* Attiny Pin 6 with 74hc pin 11
+* Attiny Pin 7 with 74hc pin 12
+* Attiny Pin 8 to breadboard + rail
+* Attiny Pin 8 has 100 nF cap to pin 4
+
+## 74HC
+
+* 74hc pin 10 to breadboard + rail
+* 74hc pin 16 to breadboard + rail
+* 74hc pin 16 has 100 nF cap to pin 8
+* 74hc pin 8 to breadboard gnd rail
+* 74hc pin 13 to breadboard gnd rail
+* 74hc pin 15 through 330 Ohm resistor to LED Green (led cathode to breadboard gnd rail)
+* 74hc pin 1 through 330 Ohm resistor to LED Yellow (led cathode to breadboard gnd rail)
+* 74hc pin 2 through 330 Ohm resistor to LED Red    (led cathode to breadboard gnd rail)
+* 74hc pin 3 through 330 Ohm resistor to LED Blue   (led cathode to breadboard gnd rail)
+
+## Rotary encoder
+
+* + to breadboard + rail
+* gnd to breadboard gnd rail
+
+## Power rail
+
+* 10 microF cap between breadboard + rail (long leg at plus) and breadboard gnd rail
+
+## Programming Notes 
+We don't have external 10 k pullup so we probably should enable the ATtiny’s internal pullups in software for CLK/DT.
+KY-040 encoders bounce a lot, so we will likely need software debouncing for rotation.
+KY-040 boards usually already have pullups on CLK and DT, using INPUT_PULLUP usually still works fine.

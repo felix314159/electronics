@@ -1,0 +1,32 @@
+# Wiring
+
+## ATtiny85
+
+Pin 8:  +5 V
+Pin 4:  GND
+Pin 6:  1 kΩ:  transistor base
+Pin 7:  potentiometer wiper
+
+## Potentiometer
+
+outer leg 1:  +5 V
+outer leg 2:  GND
+middle leg:  ATtiny Pin 7
+
+## Transistor (2N2222)
+base:  1 kΩ from ATtiny Pin 6
+emitter:  GND
+collector:  fan blue wire
+
+## Fan (Sunon MagLev MF60070V1)
+red:  +5 V
+black:  GND
+blue:  transistor collector [pwm control]
+yellow:  not connected [tachometer / FG output not needed here]
+
+## Capacitors
+100 nF between ATtiny Pin 8 and Pin 4
+optional 10-100 µF between +5 V and GND near fan
+
+## Power Supply
+3x AA Alkaline in series
