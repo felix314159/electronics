@@ -1,0 +1,26 @@
+## Usage
+
+`python3 main.py`
+
+## Testing with Pseudo Data
+
+`while true; do curl -s -X POST http://localhost:8234 -H "Content-Type: application/json" -d "{\"device\":\"pico-2-w-1\",\"co2_ppm\":\"$(shuf -i 400-1200 -n1)\",\"temp_c\":\"$(shuf -i 1800-3200 -n1 | sed 's/..$/.&/')\",\"humid_rel_perc\":\"$(shuf -i 20-80 -n1)\"}"; echo " $(date +%T)"; sleep 5; done`
+
+## Linux Service for Running This
+
+Using a systemd service is a good choice here.
+
+### One-Time Setup of Systemd Service
+
+* `sudo cp datalogger-pico.service /etc/systemd/system/`
+* `sudo systemctl daemon-reload`
+* `sudo systemctl enable datalogger-pico`   (start on boot)
+* `sudo systemctl start datalogger-pico`    (start now)
+
+### Manual Commands
+
+* `sudo systemctl status datalogger-pico`   (see ACTIVE / logs)
+* `sudo systemctl stop datalogger-pico`     (stop)
+* `sudo systemctl start datalogger-pico`    (resume)
+* `sudo systemctl restart datalogger-pico`  (restart)
+* `journalctl -u datalogger-pico -f`        (live tail stdout)

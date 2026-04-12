@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pico Datalogger</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: system-ui, sans-serif; background: #0f1117; color: #e0e0e0; padding: 20px; }
+  h1 { text-align: center; margin-bottom: 8px; font-size: 1.4rem; color: #fff; }
+  #status { text-align: center; font-size: 0.85rem; color: #888; margin-bottom: 16px; }
+  .range-bar {
+    display: flex; justify-content: center; gap: 6px; margin-bottom: 20px; flex-wrap: wrap;
+  }
+  .range-bar button {
+    background: #1e2030; color: #aaa; border: 1px solid #333; border-radius: 6px;
+    padding: 6px 14px; cursor: pointer; font-size: 0.85rem; transition: all .15s;
+  }
+  .range-bar button:hover { background: #2a2d42; color: #fff; }
+  .range-bar button.active { background: #3b5bdb; color: #fff; border-color: #3b5bdb; }
+  .chart-wrap {
+    background: #181a24; border-radius: 10px; padding: 16px; margin-bottom: 18px;
+    border: 1px solid #23263a;
+  }
+  .chart-wrap h2 { font-size: 1rem; margin-bottom: 10px; color: #ccc; }
+  canvas { width: 100% !important; }
+</style>
+</head>
+<body>
+<h1>Pico Datalogger</h1>
+<div id="status">loading...</div>
+<div class="range-bar">
+  <button data-range="60">1 min</button>
+  <button data-range="600" class="active">10 min</button>
+  <button data-range="3600">1 hour</button>
+  <button data-range="86400">1 day</button>
+  <button data-range="604800">1 week</button>
+  <button data-range="2592000">1 month</button>
+  <button data-range="31536000">1 year</button>
+  <button data-range="0">all time</button>
+</div>
+<div class="chart-wrap"><h2>CO2 (ppm)</h2><canvas id="chart-co2"></canvas></div>
+<div class="chart-wrap"><h2>Temperature (&deg;C)</h2><canvas id="chart-temp"></canvas></div>
+<div class="chart-wrap"><h2>Relative Humidity (%)</h2><canvas id="chart-humid"></canvas></div>
+
+<script>
+const COLORS = { co2: "#e5796d", temp: "#5bc0eb", humid: "#fde74c" };
+
+function makeChart(canvasId, label, color, yUnit) {
+  return new Chart(document.getElementById(canvasId), {
+    type: "line",
+    data: { datasets: [{ label, data: [], borderColor: color, backgroundColor: color + "22",
+      borderWidth: 1.5, pointRadius: 0, fill: true, tension: 0.3 }] },
+    options: {
+      animation: false,
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: "index", intersect: false },
+      scales: {
+        x: { type: "time", time: { tooltipFormat: "yyyy-MM-dd HH:mm:ss" },
+          ticks: { color: "#666", maxTicksLimit: 10 }, grid: { color: "#222" } },
+        y: { ticks: { color: "#666", callback: v => parseFloat(v.toFixed(2)) + yUnit }, grid: { color: "#222" } }
+      },
+      plugins: { legend: { display: false } }
+    }
+  });
+}
+
+const charts = {
+  co2:   makeChart("chart-co2",   "CO2 ppm",      COLORS.co2,   " ppm"),
+  temp:  makeChart("chart-temp",  "Temperature",   COLORS.temp,  " C"),
+  humid: makeChart("chart-humid", "Humidity",      COLORS.humid, " %"),
+};
+
+// resize canvases
+document.querySelectorAll("canvas").forEach(c => c.parentElement.style.height = "220px");
+
+let currentRange = 600;
+
+function setActive(btn) {
+  document.querySelectorAll(".range-bar button").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+}
+
+document.querySelectorAll(".range-bar button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    currentRange = parseInt(btn.dataset.range);
+    setActive(btn);
+    fetchData();
+  });
+});
+
+function updateChart(chart, points, xMin, xMax) {
+  chart.data.datasets[0].data = points;
+  chart.options.scales.x.min = xMin;
+  chart.options.scales.x.max = xMax;
+  chart.update();
+}
+
+async function fetchData() {
+  try {
+    const now = new Date();
+    const xMax = now;
+    const xMin = currentRange > 0 ? new Date(now.getTime() - currentRange * 1000) : undefined;
+
+    const res = await fetch("/api/readings?range=" + currentRange);
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || "server returned " + res.status);
+    }
+    const rows = await res.json();
+    const co2 = [], temp = [], humid = [];
+    for (const r of rows) {
+      const t = new Date(r.t);
+      co2.push({ x: t, y: r.co2 });
+      temp.push({ x: t, y: r.temp });
+      humid.push({ x: t, y: r.hum });
+    }
+    updateChart(charts.co2, co2, xMin, xMax);
+    updateChart(charts.temp, temp, xMin, xMax);
+    updateChart(charts.humid, humid, xMin, xMax);
+    document.getElementById("status").textContent =
+      rows.length ? "showing " + rows.length + " readings" : "no data in this range";
+  } catch (e) {
+    document.getElementById("status").textContent = "fetch error: " + e;
+  }
+}
+
+fetchData();
+setInterval(fetchData, 5000);
+</script>
+</body>
+</html>

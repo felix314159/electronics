@@ -1,0 +1,14 @@
+[Unit]
+Description=Pico Datalogger (receive and visualize data)
+After=network.target
+
+[Service]
+Type=simple
+User=<yourUsername>
+WorkingDirectory=/home/<yourUsername>/Documents/datalogger-pico
+ExecStart=/usr/bin/python3 /home/<yourUsername>/Documents/datalogger-pico/main.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
