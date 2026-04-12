@@ -6,8 +6,8 @@
 * 1x NPN transistor 2n2222
 * 1x 1 kΩ base resistor for the transistor
 * 1x 4.7 kΩ pull-up resistor for DS18B20 data line
-* 1x LED for heartbeat/status (blink for 10-20 ms once per 60s, so human can see device is still active without it being annoying or wasting too much energy)
 * 1x 22 kΩ LED resistor (low brightness)
+* 1x LED for heartbeat/status (blink for 10-20 ms once per 60s, so human can see device is still active without it being annoying or wasting too much energy)
 * 100 nF ceramic cap for decoupling across the supply near the ATtiny85
 * 10 µF bulk capacitor across power supply
 * ca 5v power source, here: battery holder for 3x AA alkaline in series with on/off switch

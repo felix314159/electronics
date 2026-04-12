@@ -22,7 +22,7 @@ Physical pin 8: VCC           -> + battery
 
 DS18B20:
 - normal powered mode (3-wire)
-- 9-bit resolution
+- 10-bit resolution (1 LSB = 0.25 C, raw values still scaled to 0.0625 C)
 */
 
 #define ONEWIRE_PIN   PB0
@@ -35,11 +35,13 @@ DS18B20:
 #define DS18B20_CMD_READ_SCRATCHPAD  0xBE
 #define DS18B20_CMD_WRITE_SCRATCHPAD 0x4E
 
-// Thresholds in DS18B20 raw units (1 LSB = 0.0625 C)
-// 34.0 C  = 34.0 / 0.0625 = 544
-// 33.5 C  = 33.5 / 0.0625 = 536
-#define ALARM_ON_RAW   544
-#define ALARM_OFF_RAW  536
+// Alarm threshold in degrees Celsius.
+// ALARM_HYST_C is the hysteresis band below the threshold to turn the alarm off.
+// Raw values are derived for 12-bit resolution (1 LSB = 0.0625 C = 1/16 C).
+#define ALARM_TEMP_C   34.0
+#define ALARM_HYST_C    0.5
+#define ALARM_ON_RAW   ((int16_t)(ALARM_TEMP_C * 16))
+#define ALARM_OFF_RAW  ((int16_t)((ALARM_TEMP_C - ALARM_HYST_C) * 16))
 
 volatile uint8_t wdt_woke = 0;
 
@@ -156,7 +158,7 @@ static uint8_t ow_read_byte(void) {
 
 // -------------------- DS18B20 --------------------
 
-static bool ds18b20_set_9bit_resolution(void) {
+static bool ds18b20_set_10bit_resolution(void) {
     if (!ow_reset_pulse()) {
         return false;
     }
@@ -167,7 +169,7 @@ static bool ds18b20_set_9bit_resolution(void) {
     // TH, TL, config
     ow_write_byte(0x00);
     ow_write_byte(0x00);
-    ow_write_byte(0x1F);   // 9-bit
+    ow_write_byte(0x3F);   // 10-bit
 
     return true;
 }
@@ -180,8 +182,8 @@ static bool ds18b20_read_temp_raw(int16_t *raw_out) {
     ow_write_byte(DS18B20_CMD_SKIP_ROM);
     ow_write_byte(DS18B20_CMD_CONVERT_T);
 
-    // 9-bit conversion time max about 94 ms
-    _delay_ms(100);
+    // 10-bit conversion time max 188 ms
+    _delay_ms(200);
 
     if (!ow_reset_pulse()) {
         return false;
@@ -263,9 +265,9 @@ void setup() {
     low_power_init();
     watchdog_init_500ms_interrupt();
 
-    // Configure sensor to 9-bit mode at startup.
+    // Configure sensor to 10-bit mode at startup.
     // If this fails, later reads will simply fail silently.
-    ds18b20_set_9bit_resolution();
+    ds18b20_set_10bit_resolution();
 }
 
 void loop() {
