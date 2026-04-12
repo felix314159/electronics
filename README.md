@@ -8,6 +8,9 @@
 ### lm386
 * Simple two-wire speaker powered by Arduino Giga and LM386. 
 
+## Datalogger
+* Multiple sensors connected to Pico 2 W, data is broadcast to local server which runs visualization website locally.
+
 ## Fan Speed Control
 * PWM fan speed control via attiny85 and bjt
 * Non-pwm fan speed control with 555 timer and mosfet
