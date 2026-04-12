@@ -8,6 +8,16 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+/* READ ME!!
+
+You must choose "8 MHZ" clock in arduino ide and then run "Burn bootloader" before you program the chip!
+If you forgot the part the buzzer will never works, as the code assumes 8 mhz clock but the attiny default might ship
+with an effective clock of 1 MHZ (because it applies a divider of 8 to the 8 mhz clock, leaving you with 8/8=1 mhz clock).
+Our code is timing sensitive due to the sleep, so that 'burn bootloader' part actually matters! Admittedly after learning all of this,
+it might have been wiser to make the code compatible with the defaults the attiny ships with, but then I had to re-run all tests to see it still works so i cba
+
+*/
+
 /*
 ATtiny85 pin mapping used here:
 
