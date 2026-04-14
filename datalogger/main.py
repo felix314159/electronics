@@ -1,10 +1,11 @@
 # Pico 2 W:
-#     pin 36 (3v3 out) to breadboard + rail 
+#     pin 36 (3v3 out) has 0.25 a resettable fuse [also called PPTC, i use MF-R025] to breadboard + rail 
 #     pin 38 (ground) to breadboard gnd rail 
 #     pin 29 (gpio22) to row x 
 # 
 #     pin 21 (i2c data)
 #     pin 22 (i2c clock)
+#   How to power the pico? 3x AA alkaline lasted only around 36 hours for me, so now i use the official rpi micro usb charger (12.5 W). it has short protection and we also use a fuse, and i also covered everything in kapton so it should be fine
 # --------------------------------------------------------------- 
 # dht11 humidity sensor (4 legs): 
 #     you look at the side with the many small squares, pins go down:
