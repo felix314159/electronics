@@ -18,6 +18,9 @@
 ## IR
 * Self-built TV remote (only on/off for now) for my Panasonic tv using attiny85 and IR LED
 
+## Magnetism
+* tle4997e2: linear 5v hall sensor for easily measuring strength of nearby magnet (important announcement: i own a 11 mT and a 32 mT fridge magnet :)
+
 ## Other
 
 ### rotary_encoder_led
