@@ -19,7 +19,14 @@
 * Self-built TV remote (only on/off for now) for my Panasonic tv using attiny85 and IR LED
 
 ## Magnetism
-* tle4997e2: linear 5v hall sensor for easily measuring strength of nearby magnet (important announcement: i own a 11 mT and a 32 mT fridge magnet :)
+
+### tle4997e2
+
+linear 5v hall sensor for easily measuring strength of nearby magnet (important announcement: i own a 11 mT and a 32 mT fridge magnet :)
+
+### lis3mdl compass
+
+simple compass shown on small oled screen. works surprising well unless you put a magnet very close
 
 ## Other
 
