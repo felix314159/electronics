@@ -4,6 +4,8 @@
 
 Build and verify the **audio output stage** of the FM radio in isolation, before adding any RF circuitry.
 
+![image](./img.png)
+
 ## What this stage proves
 
 * TDA2822M is wired correctly in BTL mode (no oscillation, no DC on the speaker, both halves of the bridge alive).
