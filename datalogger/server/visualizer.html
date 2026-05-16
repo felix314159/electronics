@@ -103,7 +103,7 @@ async function fetchData() {
   try {
     const now = new Date();
     const xMax = now;
-    const xMin = currentRange > 0 ? new Date(now.getTime() - currentRange * 1000) : undefined;
+    let xMin = currentRange > 0 ? new Date(now.getTime() - currentRange * 1000) : undefined;
 
     const res = await fetch("/api/readings?range=" + currentRange);
     if (!res.ok) {
@@ -117,6 +117,11 @@ async function fetchData() {
       co2.push({ x: t, y: r.co2 });
       temp.push({ x: t, y: r.temp });
       humid.push({ x: t, y: r.hum });
+    }
+    // avoid empty space before the first measurement
+    if (rows.length) {
+      const first = new Date(rows[0].t);
+      if (xMin === undefined || first > xMin) xMin = first;
     }
     updateChart(charts.co2, co2, xMin, xMax);
     updateChart(charts.temp, temp, xMin, xMax);
