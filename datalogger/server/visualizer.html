@@ -128,8 +128,23 @@ async function fetchData() {
   }
 }
 
+let refreshTimer = null;
+function startRefresh() {
+  if (refreshTimer === null) refreshTimer = setInterval(fetchData, 5000);
+}
+function stopRefresh() {
+  if (refreshTimer !== null) { clearInterval(refreshTimer); refreshTimer = null; }
+}
+
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") { fetchData(); startRefresh(); }
+  else { stopRefresh(); }
+});
+window.addEventListener("pageshow", () => { fetchData(); startRefresh(); });
+window.addEventListener("pagehide", stopRefresh);
+
 fetchData();
-setInterval(fetchData, 5000);
+startRefresh();
 </script>
 </body>
 </html>
