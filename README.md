@@ -5,6 +5,9 @@
 ### attiny_tda
 * Simple two-wire speaker powered by Attiny85 and TDA2822M. Can play 16 different classical melodies.
 
+## current_sensor
+* adafruit ina219 is used with attin85 and 4 digit display to display up to 3.2 amp current usage of target circuit
+
 ### fm radio
 * Goal: Build own vibecoded FM radio using SI4825-A10-CSR and TDA 2822M in BTL mode
 * Project is split into two parts so that I can step-by-step ensure certain parts work:
