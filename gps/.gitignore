@@ -1,1 +1,55 @@
-gps_export_*.csv
+# Private GPS logs and generated trip data
+*.csv
+*.tsv
+*.gpx
+*.fit
+*.tcx
+*.kml
+*.kmz
+*.geojson
+*.json
+*.nmea
+*.ubx
+*.pbf
+*.mvt
+*.sqlite
+*.sqlite3
+*.db
+*.log
+
+# Generated reports; keep only the data-free source template
+*.html
+!template.html
+
+# Downloaded maps and renderer assets
+offline_map/
+*.mbtiles
+*.pmtiles
+
+# Local binary/reference material and archives
+datasheets/
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.heic
+*.mp4
+*.mov
+*.mkv
+*.xmp
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+*.gz
+*.bz2
+*.xz
+*.zst
+
+# Python and local tooling artifacts
+__pycache__/
+*.py[cod]
+.DS_Store

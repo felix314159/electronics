@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GPS trip overview</title>
+  <link rel="stylesheet" href="offline_map/assets/maplibre-gl.css">
+  <style>
+    :root { color-scheme: light; --ink:#17212b; --muted:#667085; --card:#fff; --bg:#f3f5f7; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--bg); font:14px/1.45 system-ui,sans-serif; }
+    header { padding:20px clamp(18px,4vw,48px) 12px; }
+    h1 { margin:0 0 4px; font-size:clamp(24px,3vw,36px); }
+    header p { margin:0; color:var(--muted); }
+    #summary { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; padding:10px clamp(18px,4vw,48px) 20px; }
+    .card { background:var(--card); border-radius:14px; padding:17px; box-shadow:0 2px 12px #17212b12; border-top:5px solid var(--route); }
+    .card h2 { margin:0 0 3px; font-size:19px; }
+    .when { color:var(--muted); font-size:12px; margin-bottom:14px; }
+    .stats { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .stat strong { display:block; font-size:19px; }
+    .stat span { color:var(--muted); font-size:12px; }
+    #map { height:max(440px,57vh); margin:0 clamp(18px,4vw,48px) 24px; border-radius:14px; box-shadow:0 2px 16px #17212b20; }
+    .offline-help { height:100%; display:grid; place-content:center; text-align:center; padding:30px; font-size:16px; }
+    .offline-help code { display:inline-block; margin-top:9px; padding:6px 9px; border-radius:5px; background:#e7ebef; }
+    .route-control { background:white; padding:8px 10px; border-radius:6px; box-shadow:0 1px 6px #0003; }
+    .route-control label { display:block; white-space:nowrap; cursor:pointer; padding:2px; }
+    .route-control input { margin:0 7px 0 0; vertical-align:-1px; }
+    .swatch { display:inline-block; width:18px; height:4px; margin-right:7px; vertical-align:middle; }
+    footer { color:var(--muted); padding:0 clamp(18px,4vw,48px) 24px; font-size:12px; }
+  </style>
+</head>
+<body>
+  <header><h1>GPS trip overview</h1><p id="subtitle"></p></header>
+  <section id="summary"></section>
+  <div id="map"></div>
+  <script src="offline_map/assets/maplibre-gl.js"></script>
+  <script>
+  const trips = __TRIP_DATA__;
+  const colors = ['#1769e0','#e33d59','#00a37a','#9b51e0'];
+  const duration = s => {
+    s = Math.round(s); const h = Math.floor(s/3600); s %= 3600;
+    return `${h}:${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+  };
+  const one = (n, unit='') => n == null ? 'n/a' : `${n.toFixed(1)}${unit}`;
+  const escapeHtml = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const dateText = value => new Date(value).toLocaleString([], {dateStyle:'medium',timeStyle:'medium'});
+  const summary = document.querySelector('#summary');
+  document.querySelector('#subtitle').textContent = `${trips.length} recorded drives · ${one(trips.reduce((a,t)=>a+t.distance_m,0)/1000,' km')} total`;
+  trips.forEach((trip,index) => {
+    const safeName=escapeHtml(trip.name);
+    const card=document.createElement('article'); card.className='card'; card.style.setProperty('--route',colors[index%colors.length]);
+    card.innerHTML=`<h2>${safeName}</h2><div class="when">${dateText(trip.start_utc)} → ${dateText(trip.end_utc)}</div>
+      <div class="stats">
+       <div class="stat"><strong>${(trip.distance_m/1000).toFixed(3)} km</strong><span>track distance</span></div>
+       <div class="stat"><strong>${duration(trip.elapsed_seconds)}</strong><span>elapsed · ${duration(trip.moving_seconds)} moving</span></div>
+       <div class="stat"><strong>${trip.average_speed_kmh.toFixed(1)} km/h</strong><span>whole-session average</span></div>
+       <div class="stat"><strong>${trip.moving_average_speed_kmh.toFixed(1)} km/h</strong><span>moving average</span></div>
+       <div class="stat"><strong>${trip.max_speed_kmh.toFixed(1)} km/h</strong><span>maximum speed</span></div>
+       <div class="stat"><strong>+${one(trip.total_ascent_m,' m')} / −${one(trip.total_descent_m,' m')}</strong><span>ascent / descent</span></div>
+       <div class="stat"><strong>${one(trip.altitude_min_m,' m')} – ${one(trip.altitude_max_m,' m')}</strong><span>altitude range</span></div>
+       <div class="stat"><strong>${one(trip.altitude_net_change_m,' m')}</strong><span>net altitude change</span></div>
+      </div>`;
+    summary.appendChild(card);
+  });
+
+  if (location.protocol === 'file:') {
+    document.querySelector('#map').innerHTML='<div class="offline-help"><strong>The local map server is not running.</strong><code>./serve_trip_map.py</code></div>';
+    throw new Error('Open this report through serve_trip_map.py so the browser can read the local MBTiles archive.');
+  }
+
+  const baseStyle = {
+    version:8,
+    glyphs:`${location.origin}/fonts/{fontstack}/{range}`,
+    sources:{shortbread:{type:'vector',tiles:[`${location.origin}/tiles/{z}/{x}/{y}.pbf`],minzoom:0,maxzoom:14}},
+    layers:[
+      {id:'background',type:'background',paint:{'background-color':'#f2efe9'}},
+      {id:'land',type:'fill',source:'shortbread','source-layer':'land',paint:{'fill-color':['match',['get','kind'],['forest','wood'],'#cfe2c2',['park','garden','recreation_ground'],'#dcebd0','#e7e5dc'],'fill-opacity':.8}},
+      {id:'ocean',type:'fill',source:'shortbread','source-layer':'ocean',paint:{'fill-color':'#aad3df'}},
+      {id:'water',type:'fill',source:'shortbread','source-layer':'water_polygons',paint:{'fill-color':'#aad3df'}},
+      {id:'water-lines',type:'line',source:'shortbread','source-layer':'water_lines',paint:{'line-color':'#86bdcf','line-width':['interpolate',['linear'],['zoom'],7,.5,14,2]}},
+      {id:'boundaries',type:'line',source:'shortbread','source-layer':'boundaries',paint:{'line-color':'#a68ba4','line-width':1}},
+      {id:'street-areas',type:'fill',source:'shortbread','source-layer':'street_polygons',paint:{'fill-color':['match',['get','kind'],'motorway','#e66e89',['trunk','primary','secondary'],'#edb96d','#d0cfca']}},
+      {id:'road-casing',type:'line',source:'shortbread','source-layer':'streets',paint:{'line-color':'#fff','line-width':['interpolate',['linear'],['zoom'],6,1.2,11,3.2,15,8]}},
+      {id:'roads',type:'line',source:'shortbread','source-layer':'streets',layout:{'line-cap':'round','line-join':'round'},paint:{
+        'line-color':['match',['get','kind'],'motorway','#e66e89',['trunk','primary','secondary'],'#edb96d','#c6c5c0'],
+        'line-width':['interpolate',['linear'],['zoom'],6,.5,11,2,15,6]}},
+      {id:'buildings',type:'fill',source:'shortbread','source-layer':'buildings',minzoom:12,paint:{'fill-color':'#d9d0c9','fill-outline-color':'#c8beb7'}},
+      {id:'street-labels',type:'symbol',source:'shortbread','source-layer':'street_labels',minzoom:11,layout:{'symbol-placement':'line','text-field':['coalesce',['get','name'],['get','ref']],'text-font':['Open Sans Semibold'],'text-size':11},paint:{'text-color':'#5f5c58','text-halo-width':1.2,'text-halo-color':'#fff'}},
+      {id:'places',type:'symbol',source:'shortbread','source-layer':'place_labels',layout:{'text-field':['get','name'],'text-font':['Open Sans Semibold'],'text-size':['interpolate',['linear'],['zoom'],7,11,12,16]},paint:{'text-color':'#4c4b49','text-halo-width':1.5,'text-halo-color':'#fff'}}
+    ]
+  };
+
+  const coordinates=trips.flatMap(trip=>trip.points.map(point=>[point.lon,point.lat]));
+  const bounds=coordinates.reduce((box,coordinate)=>box.extend(coordinate),new maplibregl.LngLatBounds(coordinates[0],coordinates[0]));
+  const map=new maplibregl.Map({container:'map',style:baseStyle,bounds,fitBoundsOptions:{padding:45},attributionControl:false});
+  map.on('error',event=>console.error('Map error:',event.error?.message || event.error || event));
+  map.addControl(new maplibregl.NavigationControl(),'top-left');
+  map.addControl(new maplibregl.AttributionControl({compact:true,customAttribution:'Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> · local vector extract'}));
+
+  class RouteControl {
+    onAdd(mapInstance) {
+      this.map=mapInstance; this.container=document.createElement('div');
+      this.container.className='maplibregl-ctrl route-control';
+      trips.forEach((trip,index)=>{
+        const label=document.createElement('label'), checkbox=document.createElement('input');
+        checkbox.type='checkbox'; checkbox.checked=true;
+        checkbox.addEventListener('change',()=>{
+          const visibility=checkbox.checked?'visible':'none';
+          mapInstance.setLayoutProperty(`route-${index}`,'visibility',visibility);
+          mapInstance.setLayoutProperty(`markers-${index}`,'visibility',visibility);
+        });
+        const swatch=document.createElement('i'); swatch.className='swatch'; swatch.style.background=colors[index%colors.length];
+        label.append(checkbox,swatch,document.createTextNode(trip.name)); this.container.appendChild(label);
+      });
+      return this.container;
+    }
+    onRemove() { this.container.remove(); this.map=undefined; }
+  }
+
+  map.on('load',()=>{
+    trips.forEach((trip,index)=>{
+      const routeId=`route-${index}`, markersId=`markers-${index}`, color=colors[index%colors.length];
+      const routeOffset=(index-(trips.length-1)/2)*7;
+      const routeCoordinates=trip.points.map(point=>[point.lon,point.lat]);
+      const firstCoordinate=routeCoordinates[0], lastCoordinate=routeCoordinates[routeCoordinates.length-1];
+      if (firstCoordinate[0]>lastCoordinate[0] || (firstCoordinate[0]===lastCoordinate[0] && firstCoordinate[1]>lastCoordinate[1])) routeCoordinates.reverse();
+      map.addSource(routeId,{type:'geojson',data:{type:'Feature',geometry:{type:'LineString',coordinates:routeCoordinates}}});
+      map.addLayer({id:routeId,type:'line',source:routeId,layout:{'line-cap':'round','line-join':'round'},paint:{'line-color':color,'line-width':5,'line-offset':routeOffset,'line-opacity':.92}});
+      const first=trip.points[0], last=trip.points[trip.points.length-1];
+      map.addSource(markersId,{type:'geojson',data:{type:'FeatureCollection',features:[
+        {type:'Feature',properties:{title:`${trip.name}: start`,detail:dateText(first.t)},geometry:{type:'Point',coordinates:[first.lon,first.lat]}},
+        {type:'Feature',properties:{title:`${trip.name}: end`,detail:dateText(last.t)},geometry:{type:'Point',coordinates:[last.lon,last.lat]}},
+        {type:'Feature',properties:{title:`${trip.name}: maximum speed`,detail:`${trip.max_speed_kmh.toFixed(2)} km/h`},geometry:{type:'Point',coordinates:[trip.max_speed_location[1],trip.max_speed_location[0]]}}
+      ]}});
+      map.addLayer({id:markersId,type:'circle',source:markersId,paint:{'circle-radius':7,'circle-color':color,'circle-stroke-color':'#fff','circle-stroke-width':2}});
+      map.on('click',markersId,event=>{
+        const feature=event.features[0];
+        new maplibregl.Popup().setLngLat(feature.geometry.coordinates).setHTML(`<b>${escapeHtml(feature.properties.title)}</b><br>${escapeHtml(feature.properties.detail)}`).addTo(map);
+      });
+      map.on('mouseenter',markersId,()=>map.getCanvas().style.cursor='pointer');
+      map.on('mouseleave',markersId,()=>map.getCanvas().style.cursor='');
+    });
+    map.addControl(new RouteControl(),'top-right');
+  });
+  </script>
+</body>
+</html>

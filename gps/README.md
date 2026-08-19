@@ -152,3 +152,40 @@ After running the deletion script your pico won't be logging GPS data until you 
 - [MicroPython persistent filesystem documentation](https://docs.micropython.org/en/latest/reference/filesystem.html)
 - [Raspberry Pi Pico 2 documentation](https://www.raspberrypi.com/documentation/microcontrollers/pico-series.html)
 - [Bourns MF-R resettable-fuse datasheet](https://www.bourns.com/docs/product-datasheets/mf-r.pdf)
+
+---
+
+## Offline trip map generation
+
+To actually analyze and view data collected keep the private map archive and renderer files under `offline_map/`. That
+directory is ignored by Git because regional map extracts are both large and a
+potential clue about the recorded trips. The generated map does not contact a
+map service, CDN, or other remote server while it is being viewed.
+
+Generate the report from every session in the CSV:
+
+```bash
+./analyze_trips.py /path/to/private-export.csv --json /path/to/private-summary.json
+```
+
+Open the report with the local server:
+
+```bash
+./serve_trip_map.py
+```
+
+The server opens `http://127.0.0.1:8000/gps_trip_overview.html` and runs only on
+the local machine. Press Ctrl+C in the terminal to stop it. Opening the HTML as a
+`file://` URL cannot work because browsers cannot query the SQLite-based MBTiles
+archive directly.
+
+## Local map files
+
+- `offline_map/*.mbtiles`: one Shortbread-compatible vector-tile archive
+- `offline_map/assets/`: MapLibre GL JS 4.7.1 renderer and CSS
+- `offline_map/fonts/`: glyphs used for place and street labels
+
+Map data is © OpenStreetMap contributors and is available under the Open Database
+License 1.0. Download a suitable regional Shortbread archive privately and keep
+it inside the ignored `offline_map/` directory. If that directory contains more
+than one archive, pass the intended one to `serve_trip_map.py` with `--mbtiles`.
