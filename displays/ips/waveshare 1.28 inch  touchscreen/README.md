@@ -63,3 +63,4 @@ Use the following connections, matching [Waveshare's Pico wiring and examples](h
 
 * [touch_lcd.py](touch_lcd.py): standalone GC9A01 display and CST816S/T touch driver, using only modules included in standard Pico 2 W MicroPython firmware. It includes the LCD initialization, RGB565 framebuffer, drawing/text helpers, backlight PWM, touch coordinates and gesture codes. Its default pins match the wiring table above.
 * [demo_touch_lcd.py](demo_touch_lcd.py): color, gradient, geometry, animation and brightness tests, followed by touch orientation setup, five touch targets and a drawing pad with a CLEAR button. No separate fonts, images or packages are required on the Pico.
+* [mouse.py](mouse.py): use the display as bluetooth mouse! testing under linux, supports single-tap, double-tap, right-click (long press), mouse movement and gestures like double-tap-into-drag-and-hold you would use e.g. for highlighting text
