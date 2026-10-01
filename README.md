@@ -5,17 +5,15 @@
 ### attiny_tda
 * Simple two-wire speaker powered by Attiny85 and TDA2822M. Can play 16 different classical melodies.
 
-## current_sensor
-* adafruit ina219 is used with attin85 and 4 digit display to display up to 3.2 amp current usage of target circuit
-
-### fm radio
-* Goal: Build own vibecoded FM radio using SI4825-A10-CSR and TDA 2822M in BTL mode
-* Project is split into two parts so that I can step-by-step ensure certain parts work:
-    * Speaker Stage (Speaker, TDA, Pot and for now an Arduino Giga as sound source)
-    * FM radio Stage (takes previous project and replaces Arduino with an FM radio source)
-
 ### lm386
 * Simple two-wire speaker powered by Arduino Giga and LM386. 
+
+## Coil Switching LED Indicator
+
+* Device you hold near a coil to see if it is switching or not.
+
+## Current Sensor
+* adafruit ina219 is used with attin85 and 4 digit display to display up to 3.2 amp current usage of target circuit
 
 ## Datalogger
 * Multiple sensors connected to Pico 2 W, data is broadcast to local server which runs visualization website locally.
@@ -23,6 +21,12 @@
 ## Fan Speed Control
 * PWM fan speed control via attiny85 and bjt
 * Non-pwm fan speed control with 555 timer and mosfet
+
+## FM Radio
+* Goal: Build own vibecoded FM radio using SI4825-A10-CSR and TDA 2822M in BTL mode
+* Project is split into two parts so that I can step-by-step ensure certain parts work:
+    * Speaker Stage (Speaker, TDA, Pot and for now an Arduino Giga as sound source)
+    * FM radio Stage (takes previous project and replaces Arduino with an FM radio source)
 
 ## IR
 * Self-built TV remote (only on/off for now) for my Panasonic tv using attiny85 and IR LED
