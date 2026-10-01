@@ -1,0 +1,383 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1160" viewBox="0 0 1800 1160">
+<style>text{font-family:DejaVu Sans,sans-serif}.wire{fill:none;stroke:#182b3a;stroke-width:2.5;stroke-linecap:round}.symbol{fill:white;stroke:#182b3a;stroke-width:2.5}</style>
+<rect width="1800" height="1160" fill="#f1f5f7"/>
+<text x="30" y="43" font-size="32" fill="#182b3a" text-anchor="start">Contactless switching-coil LED detector</text>
+<text x="30" y="75" font-size="21" fill="#182b3a" text-anchor="start">CR2032 • all through-hole • no firmware • hold insulated pickup close to target</text>
+<rect x="25" y="100" width="570" height="460" rx="14" fill="#fff" stroke="#cbd7de" stroke-width="2"/>
+<text x="45" y="133" font-size="23" fill="#182b3a" text-anchor="start">1. Pickup + first amplifier</text>
+<rect x="610" y="100" width="510" height="460" rx="14" fill="#fff" stroke="#cbd7de" stroke-width="2"/>
+<text x="630" y="133" font-size="23" fill="#182b3a" text-anchor="start">2. Second amplifier</text>
+<rect x="1135" y="100" width="640" height="460" rx="14" fill="#fff" stroke="#cbd7de" stroke-width="2"/>
+<text x="1155" y="133" font-size="23" fill="#182b3a" text-anchor="start">3. Rectifier + envelope</text>
+<rect x="25" y="580" width="570" height="465" rx="14" fill="#fff" stroke="#cbd7de" stroke-width="2"/>
+<text x="45" y="613" font-size="23" fill="#182b3a" text-anchor="start">4. Sensitivity + hysteresis</text>
+<rect x="610" y="580" width="510" height="465" rx="14" fill="#fff" stroke="#cbd7de" stroke-width="2"/>
+<text x="630" y="613" font-size="23" fill="#182b3a" text-anchor="start">5. Comparator (DIP-8)</text>
+<rect x="1135" y="580" width="640" height="465" rx="14" fill="#fff" stroke="#cbd7de" stroke-width="2"/>
+<text x="1155" y="613" font-size="23" fill="#182b3a" text-anchor="start">6. Power + green LED</text>
+<circle cx="365" cy="165" r="4" fill="#182b3a"/>
+<text x="365" y="155" font-size="19" fill="#006b74" text-anchor="start">VA</text>
+<path d="M365,180 L365,192" class="wire"/>
+<rect x="357" y="192" width="16" height="42" class="symbol"/>
+<path d="M365,234 L365,246" class="wire"/>
+<text x="383" y="207" font-size="20" fill="#182b3a" text-anchor="start">R1</text>
+<text x="383" y="231" font-size="20" fill="#182b3a" text-anchor="start">4.7k</text>
+<path d="M365,165 L365,180" class="wire"/>
+<path d="M365,246 L365,285" class="wire"/>
+<circle cx="365" cy="265" r="4" fill="#182b3a"/>
+<path d="M365,265 L480,265" class="wire"/>
+<circle cx="480" cy="265" r="4" fill="#182b3a"/>
+<text x="480" y="255" font-size="19" fill="#006b74" text-anchor="start">A1</text>
+<circle cx="358" cy="345" r="35" class="symbol"/>
+<path d="M315,345 L345,345" class="wire"/>
+<path d="M345,325 L345,365" class="wire"/>
+<path d="M345,333 L365,310" class="wire"/>
+<path d="M365,310 L365,285" class="wire"/>
+<path d="M345,357 L365,380" class="wire"/>
+<path d="M365,380 L365,405" class="wire"/>
+<path d="M363,377 L352,372 L359,365 Z" fill="#182b3a"/>
+<text x="405" y="341" font-size="20" fill="#182b3a" text-anchor="start">Q1</text>
+<text x="405" y="367" font-size="18" fill="#182b3a" text-anchor="start">BC547B</text>
+<text x="322" y="335" font-size="16" fill="#182b3a" text-anchor="start">B</text>
+<text x="373" y="300" font-size="16" fill="#182b3a" text-anchor="start">C</text>
+<text x="373" y="397" font-size="16" fill="#182b3a" text-anchor="start">E</text>
+<path d="M365,405 L365,417" class="wire"/>
+<rect x="357" y="417" width="16" height="42" class="symbol"/>
+<path d="M365,459 L365,471" class="wire"/>
+<text x="383" y="432" font-size="20" fill="#182b3a" text-anchor="start">R3</text>
+<text x="383" y="456" font-size="20" fill="#182b3a" text-anchor="start">220Ω</text>
+<path d="M365,471 L365,483" class="wire"/>
+<path d="M352,483 L378,483" class="wire"/>
+<path d="M356,489 L374,489" class="wire"/>
+<path d="M361,495 L369,495" class="wire"/>
+<path d="M365,265 L240,265" class="wire"/>
+<path d="M240,265 L240,280" class="wire"/>
+<path d="M240,280 L240,292" class="wire"/>
+<rect x="232" y="292" width="16" height="42" class="symbol"/>
+<path d="M240,334 L240,346" class="wire"/>
+<text x="258" y="307" font-size="20" fill="#182b3a" text-anchor="start">R2</text>
+<text x="258" y="331" font-size="20" fill="#182b3a" text-anchor="start">470k</text>
+<path d="M240,346 L240,345" class="wire"/>
+<circle cx="240" cy="345" r="4" fill="#182b3a"/>
+<path d="M240,345 L315,345" class="wire"/>
+<path d="M155,345 L179,345" class="wire"/>
+<path d="M179,330 L179,360" class="wire"/>
+<path d="M187,330 L187,360" class="wire"/>
+<path d="M187,345 L215,345" class="wire"/>
+<text x="183" y="321" font-size="19" fill="#182b3a" text-anchor="middle">C1 1nF</text>
+<path d="M215,345 L240,345" class="wire"/>
+<path d="M115,345 L155,345" class="wire"/>
+<path d="M115,345 L115,375" class="wire"/>
+<path d="M115,375 c-25,0 -25,18 0,18 c-25,0 -25,18 0,18 c-25,0 -25,18 0,18 c-25,0 -25,18 0,18" class="wire"/>
+<path d="M115,447 L115,459" class="wire"/>
+<path d="M102,459 L128,459" class="wire"/>
+<path d="M106,465 L124,465" class="wire"/>
+<path d="M111,471 L119,471" class="wire"/>
+<text x="45" y="490" font-size="18" fill="#182b3a" text-anchor="start">L1: 20 turns, Ø6 mm air core</text>
+<text x="45" y="519" font-size="18" fill="#182b3a" text-anchor="start">Coil leads ≤10 mm; insulation on tip</text>
+<circle cx="865" cy="165" r="4" fill="#182b3a"/>
+<text x="865" y="155" font-size="19" fill="#006b74" text-anchor="start">VA</text>
+<path d="M865,165 L865,180" class="wire"/>
+<path d="M865,180 L865,192" class="wire"/>
+<rect x="857" y="192" width="16" height="42" class="symbol"/>
+<path d="M865,234 L865,246" class="wire"/>
+<text x="883" y="207" font-size="20" fill="#182b3a" text-anchor="start">R4</text>
+<text x="883" y="231" font-size="20" fill="#182b3a" text-anchor="start">4.7k</text>
+<path d="M865,246 L865,285" class="wire"/>
+<circle cx="865" cy="265" r="4" fill="#182b3a"/>
+<path d="M865,265 L985,265" class="wire"/>
+<circle cx="985" cy="265" r="4" fill="#182b3a"/>
+<text x="985" y="255" font-size="19" fill="#006b74" text-anchor="start">A2</text>
+<circle cx="858" cy="345" r="35" class="symbol"/>
+<path d="M815,345 L845,345" class="wire"/>
+<path d="M845,325 L845,365" class="wire"/>
+<path d="M845,333 L865,310" class="wire"/>
+<path d="M865,310 L865,285" class="wire"/>
+<path d="M845,357 L865,380" class="wire"/>
+<path d="M865,380 L865,405" class="wire"/>
+<path d="M863,377 L852,372 L859,365 Z" fill="#182b3a"/>
+<text x="905" y="341" font-size="20" fill="#182b3a" text-anchor="start">Q2</text>
+<text x="905" y="367" font-size="18" fill="#182b3a" text-anchor="start">BC547B</text>
+<text x="822" y="335" font-size="16" fill="#182b3a" text-anchor="start">B</text>
+<text x="873" y="300" font-size="16" fill="#182b3a" text-anchor="start">C</text>
+<text x="873" y="397" font-size="16" fill="#182b3a" text-anchor="start">E</text>
+<path d="M865,405 L865,417" class="wire"/>
+<rect x="857" y="417" width="16" height="42" class="symbol"/>
+<path d="M865,459 L865,471" class="wire"/>
+<text x="883" y="432" font-size="20" fill="#182b3a" text-anchor="start">R6</text>
+<text x="883" y="456" font-size="20" fill="#182b3a" text-anchor="start">220Ω</text>
+<path d="M865,471 L865,483" class="wire"/>
+<path d="M852,483 L878,483" class="wire"/>
+<path d="M856,489 L874,489" class="wire"/>
+<path d="M861,495 L869,495" class="wire"/>
+<path d="M865,265 L745,265" class="wire"/>
+<path d="M745,265 L745,280" class="wire"/>
+<path d="M745,280 L745,292" class="wire"/>
+<rect x="737" y="292" width="16" height="42" class="symbol"/>
+<path d="M745,334 L745,346" class="wire"/>
+<text x="763" y="307" font-size="20" fill="#182b3a" text-anchor="start">R5</text>
+<text x="763" y="331" font-size="20" fill="#182b3a" text-anchor="start">470k</text>
+<path d="M745,346 L745,345" class="wire"/>
+<circle cx="745" cy="345" r="4" fill="#182b3a"/>
+<path d="M745,345 L815,345" class="wire"/>
+<circle cx="635" cy="345" r="4" fill="#182b3a"/>
+<text x="635" y="335" font-size="19" fill="#006b74" text-anchor="start">A1</text>
+<path d="M635,345 L660,345" class="wire"/>
+<path d="M660,345 L684,345" class="wire"/>
+<path d="M684,330 L684,360" class="wire"/>
+<path d="M692,330 L692,360" class="wire"/>
+<path d="M692,345 L720,345" class="wire"/>
+<text x="688" y="321" font-size="19" fill="#182b3a" text-anchor="middle">C2 1nF</text>
+<path d="M720,345 L745,345" class="wire"/>
+<text x="630" y="519" font-size="18" fill="#182b3a" text-anchor="start">A1 / A2 are collector test points</text>
+<circle cx="1165" cy="240" r="4" fill="#182b3a"/>
+<text x="1165" y="230" font-size="19" fill="#006b74" text-anchor="start">A2</text>
+<path d="M1165,240 L1190,240" class="wire"/>
+<path d="M1190,240 L1214,240" class="wire"/>
+<path d="M1214,225 L1214,255" class="wire"/>
+<path d="M1222,225 L1222,255" class="wire"/>
+<path d="M1222,240 L1250,240" class="wire"/>
+<text x="1218" y="216" font-size="19" fill="#182b3a" text-anchor="middle">C3 100nF</text>
+<path d="M1250,240 L1370,240" class="wire"/>
+<circle cx="1280" cy="240" r="4" fill="#182b3a"/>
+<text x="1280" y="230" font-size="19" fill="#006b74" text-anchor="start">AC</text>
+<circle cx="1330" cy="240" r="4" fill="#182b3a"/>
+<path d="M1370,240 L1388,240" class="wire"/>
+<path d="M1388,228 L1388,252 L1410,240 Z" class="symbol"/>
+<path d="M1410,226 L1410,254" class="wire"/>
+<path d="M1410,240 L1430,240" class="wire"/>
+<text x="1400" y="215" font-size="20" fill="#182b3a" text-anchor="middle">D2</text>
+<path d="M1430,240 L1460,240" class="wire"/>
+<path d="M1460,240 L1472,240" class="wire"/>
+<rect x="1472" y="232" width="46" height="16" class="symbol"/>
+<path d="M1518,240 L1530,240" class="wire"/>
+<text x="1495" y="213" font-size="19" fill="#182b3a" text-anchor="middle">R8 10k</text>
+<path d="M1530,240 L1610,240" class="wire"/>
+<circle cx="1610" cy="240" r="4" fill="#182b3a"/>
+<text x="1610" y="230" font-size="19" fill="#006b74" text-anchor="start">ENV</text>
+<path d="M1610,240 L1685,240" class="wire"/>
+<path d="M1280,240 L1280,330" class="wire"/>
+<path d="M1280,330 L1280,345" class="wire"/>
+<path d="M1266,345 L1294,345" class="wire"/>
+<path d="M1280,345 L1268,367 L1292,367 Z" class="symbol"/>
+<path d="M1280,367 L1280,390" class="wire"/>
+<text x="1300" y="366" font-size="20" fill="#182b3a" text-anchor="start">D1</text>
+<path d="M1280,390 L1280,402" class="wire"/>
+<path d="M1267,402 L1293,402" class="wire"/>
+<path d="M1271,408 L1289,408" class="wire"/>
+<path d="M1276,414 L1284,414" class="wire"/>
+<path d="M1330,240 L1330,270" class="wire"/>
+<path d="M1330,270 L1440,270" class="wire"/>
+<path d="M1440,270 L1440,330" class="wire"/>
+<path d="M1440,330 L1440,342" class="wire"/>
+<rect x="1432" y="342" width="16" height="42" class="symbol"/>
+<path d="M1440,384 L1440,396" class="wire"/>
+<text x="1458" y="357" font-size="20" fill="#182b3a" text-anchor="start">R7</text>
+<text x="1458" y="381" font-size="20" fill="#182b3a" text-anchor="start">1M</text>
+<path d="M1440,396 L1440,408" class="wire"/>
+<path d="M1427,408 L1453,408" class="wire"/>
+<path d="M1431,414 L1449,414" class="wire"/>
+<path d="M1436,420 L1444,420" class="wire"/>
+<path d="M1610,240 L1610,330" class="wire"/>
+<path d="M1610,330 L1610,342" class="wire"/>
+<rect x="1602" y="342" width="16" height="42" class="symbol"/>
+<path d="M1610,384 L1610,396" class="wire"/>
+<text x="1628" y="357" font-size="20" fill="#182b3a" text-anchor="start">R9</text>
+<text x="1628" y="381" font-size="20" fill="#182b3a" text-anchor="start">100k</text>
+<path d="M1610,396 L1610,408" class="wire"/>
+<path d="M1597,408 L1623,408" class="wire"/>
+<path d="M1601,414 L1619,414" class="wire"/>
+<path d="M1606,420 L1614,420" class="wire"/>
+<path d="M1685,240 L1685,330" class="wire"/>
+<path d="M1685,330 L1685,354" class="wire"/>
+<path d="M1670,354 L1700,354" class="wire"/>
+<path d="M1670,362 L1700,362" class="wire"/>
+<path d="M1685,362 L1685,390" class="wire"/>
+<text x="1705" y="353" font-size="20" fill="#182b3a" text-anchor="start">C4</text>
+<text x="1705" y="377" font-size="20" fill="#182b3a" text-anchor="start">470nF</text>
+<path d="M1685,390 L1685,402" class="wire"/>
+<path d="M1672,402 L1698,402" class="wire"/>
+<path d="M1676,408 L1694,408" class="wire"/>
+<path d="M1681,414 L1689,414" class="wire"/>
+<text x="1160" y="470" font-size="18" fill="#182b3a" text-anchor="start">D1, D2: 1N4148; bar = cathode (band)</text>
+<circle cx="1165" cy="525" r="4" fill="#182b3a"/>
+<text x="1165" y="515" font-size="19" fill="#006b74" text-anchor="start">VCC</text>
+<path d="M1165,525 L1210,525" class="wire"/>
+<circle cx="1210" cy="525" r="4" class="symbol"/><circle cx="1260" cy="525" r="4" class="symbol"/>
+<path d="M1210,525 L1255,510" class="wire"/>
+<text x="1205" y="497" font-size="18" fill="#182b3a" text-anchor="start">S1 TEST</text>
+<path d="M1260,525 L1300,525" class="wire"/>
+<path d="M1300,525 L1312,525" class="wire"/>
+<rect x="1312" y="517" width="46" height="16" class="symbol"/>
+<path d="M1358,525 L1370,525" class="wire"/>
+<text x="1335" y="498" font-size="19" fill="#182b3a" text-anchor="middle">R17 100k</text>
+<path d="M1370,525 L1470,525" class="wire"/>
+<circle cx="1470" cy="525" r="4" fill="#182b3a"/>
+<text x="1470" y="515" font-size="19" fill="#006b74" text-anchor="start">ENV</text>
+<circle cx="140" cy="645" r="4" fill="#182b3a"/>
+<text x="140" y="635" font-size="19" fill="#006b74" text-anchor="start">VCC</text>
+<path d="M140,645 L140,655" class="wire"/>
+<path d="M140,655 L140,667" class="wire"/>
+<rect x="132" y="667" width="16" height="42" class="symbol"/>
+<path d="M140,709 L140,721" class="wire"/>
+<text x="158" y="682" font-size="20" fill="#182b3a" text-anchor="start">R10</text>
+<text x="158" y="706" font-size="20" fill="#182b3a" text-anchor="start">120k</text>
+<path d="M140,721 L140,750" class="wire"/>
+<path d="M140,750 L140,762" class="wire"/>
+<rect x="132" y="762" width="16" height="42" class="symbol"/>
+<path d="M140,804 L140,816" class="wire"/>
+<text x="158" y="777" font-size="20" fill="#182b3a" text-anchor="start">P1</text>
+<text x="158" y="801" font-size="20" fill="#182b3a" text-anchor="start">10k linear</text>
+<path d="M140,816 L140,830" class="wire"/>
+<path d="M140,830 L140,842" class="wire"/>
+<rect x="132" y="842" width="16" height="42" class="symbol"/>
+<path d="M140,884 L140,896" class="wire"/>
+<text x="158" y="857" font-size="20" fill="#182b3a" text-anchor="start">R11</text>
+<text x="158" y="881" font-size="20" fill="#182b3a" text-anchor="start">2.2k</text>
+<path d="M140,896 L140,908" class="wire"/>
+<path d="M127,908 L153,908" class="wire"/>
+<path d="M131,914 L149,914" class="wire"/>
+<path d="M136,920 L144,920" class="wire"/>
+<path d="M240,783 L158,783" class="wire"/>
+<path d="M158,783 L170,777 L170,789 Z" fill="#182b3a"/>
+<path d="M240,783 L270,783" class="wire"/>
+<path d="M270,783 L282,783" class="wire"/>
+<rect x="282" y="775" width="46" height="16" class="symbol"/>
+<path d="M328,783 L340,783" class="wire"/>
+<text x="305" y="756" font-size="19" fill="#182b3a" text-anchor="middle">R12 10k</text>
+<path d="M340,783 L445,783" class="wire"/>
+<circle cx="445" cy="783" r="4" fill="#182b3a"/>
+<text x="445" y="773" font-size="19" fill="#006b74" text-anchor="start">REF</text>
+<circle cx="380" cy="783" r="4" fill="#182b3a"/>
+<path d="M380,783 L380,860" class="wire"/>
+<path d="M380,860 L392,860" class="wire"/>
+<rect x="392" y="852" width="46" height="16" class="symbol"/>
+<path d="M438,860 L450,860" class="wire"/>
+<text x="415" y="833" font-size="19" fill="#182b3a" text-anchor="middle">R13 1M</text>
+<path d="M450,860 L515,860" class="wire"/>
+<circle cx="515" cy="860" r="4" fill="#182b3a"/>
+<text x="515" y="850" font-size="19" fill="#006b74" text-anchor="start">OUT</text>
+<text x="45" y="965" font-size="19" fill="#182b3a" text-anchor="start">P1 lower end = more sensitive</text>
+<text x="45" y="995" font-size="18" fill="#182b3a" text-anchor="start">R13 prevents chatter at the threshold</text>
+<path d="M790,720 L790,900 L960,810 Z" class="symbol"/>
+<circle cx="650" cy="755" r="4" fill="#182b3a"/>
+<text x="650" y="745" font-size="19" fill="#006b74" text-anchor="start">REF</text>
+<path d="M650,755 L790,755" class="wire"/>
+<text x="800" y="763" font-size="25" fill="#182b3a" text-anchor="start">+</text>
+<text x="745" y="746" font-size="18" fill="#182b3a" text-anchor="start">3</text>
+<circle cx="650" cy="865" r="4" fill="#182b3a"/>
+<text x="650" y="855" font-size="19" fill="#006b74" text-anchor="start">ENV</text>
+<path d="M650,865 L790,865" class="wire"/>
+<text x="800" y="873" font-size="25" fill="#182b3a" text-anchor="start">−</text>
+<text x="745" y="856" font-size="18" fill="#182b3a" text-anchor="start">2</text>
+<path d="M960,810 L1040,810" class="wire"/>
+<circle cx="1040" cy="810" r="4" fill="#182b3a"/>
+<text x="1040" y="800" font-size="19" fill="#006b74" text-anchor="start">OUT</text>
+<text x="972" y="842" font-size="18" fill="#182b3a" text-anchor="start">6</text>
+<path d="M850,752 L850,670" class="wire"/>
+<circle cx="850" cy="670" r="4" fill="#182b3a"/>
+<text x="850" y="660" font-size="19" fill="#006b74" text-anchor="start">VCC</text>
+<text x="860" y="709" font-size="18" fill="#182b3a" text-anchor="start">7</text>
+<path d="M850,868 L850,925" class="wire"/>
+<path d="M850,925 L850,937" class="wire"/>
+<path d="M837,937 L863,937" class="wire"/>
+<path d="M841,943 L859,943" class="wire"/>
+<path d="M846,949 L854,949" class="wire"/>
+<text x="860" y="916" font-size="18" fill="#182b3a" text-anchor="start">4</text>
+<text x="830" y="813" font-size="22" fill="#182b3a" text-anchor="start">U1</text>
+<text x="720" y="970" font-size="19" fill="#182b3a" text-anchor="start">TLV3701IP; NC: 1, 5, 8</text>
+<text x="630" y="1000" font-size="18" fill="#182b3a" text-anchor="start">Output LOW when switching is detected</text>
+<text x="1160" y="646" font-size="20" fill="#182b3a" text-anchor="start">B1 CR2032 + → VCC directly</text>
+<text x="1160" y="675" font-size="19" fill="#182b3a" text-anchor="start">B1 − → GND     (always powered)</text>
+<circle cx="1185" cy="722" r="4" fill="#182b3a"/>
+<text x="1185" y="712" font-size="19" fill="#006b74" text-anchor="start">VCC</text>
+<path d="M1220,722 L1232,722" class="wire"/>
+<rect x="1232" y="714" width="46" height="16" class="symbol"/>
+<path d="M1278,722 L1290,722" class="wire"/>
+<text x="1255" y="695" font-size="19" fill="#182b3a" text-anchor="middle">R14 100Ω</text>
+<path d="M1185,722 L1220,722" class="wire"/>
+<path d="M1290,722 L1425,722" class="wire"/>
+<circle cx="1425" cy="722" r="4" fill="#182b3a"/>
+<text x="1425" y="712" font-size="19" fill="#006b74" text-anchor="start">VA</text>
+<circle cx="1320" cy="722" r="4" fill="#182b3a"/>
+<path d="M1320,722 L1320,753" class="wire"/>
+<path d="M1320,753 L1320,777" class="wire"/>
+<path d="M1305,777 L1335,777" class="wire"/>
+<path d="M1305,785 L1335,785" class="wire"/>
+<path d="M1320,785 L1320,813" class="wire"/>
+<text x="1340" y="776" font-size="20" fill="#182b3a" text-anchor="start">C5</text>
+<text x="1340" y="800" font-size="20" fill="#182b3a" text-anchor="start">10µF</text>
+<path d="M1320,813 L1320,825" class="wire"/>
+<path d="M1307,825 L1333,825" class="wire"/>
+<path d="M1311,831 L1329,831" class="wire"/>
+<path d="M1316,837 L1324,837" class="wire"/>
+<path d="M1425,722 L1425,753" class="wire"/>
+<path d="M1425,753 L1425,777" class="wire"/>
+<path d="M1410,777 L1440,777" class="wire"/>
+<path d="M1410,785 L1440,785" class="wire"/>
+<path d="M1425,785 L1425,813" class="wire"/>
+<text x="1445" y="776" font-size="20" fill="#182b3a" text-anchor="start">C6</text>
+<text x="1445" y="800" font-size="20" fill="#182b3a" text-anchor="start">100nF</text>
+<path d="M1425,813 L1425,825" class="wire"/>
+<path d="M1412,825 L1438,825" class="wire"/>
+<path d="M1416,831 L1434,831" class="wire"/>
+<path d="M1421,837 L1429,837" class="wire"/>
+<circle cx="1185" cy="910" r="4" fill="#182b3a"/>
+<text x="1185" y="900" font-size="19" fill="#006b74" text-anchor="start">VCC</text>
+<path d="M1185,910 L1185,934" class="wire"/>
+<path d="M1170,934 L1200,934" class="wire"/>
+<path d="M1170,942 L1200,942" class="wire"/>
+<path d="M1185,942 L1185,970" class="wire"/>
+<text x="1205" y="933" font-size="20" fill="#182b3a" text-anchor="start">C7</text>
+<text x="1205" y="957" font-size="20" fill="#182b3a" text-anchor="start">100nF</text>
+<path d="M1185,970 L1185,982" class="wire"/>
+<path d="M1172,982 L1198,982" class="wire"/>
+<path d="M1176,988 L1194,988" class="wire"/>
+<path d="M1181,994 L1189,994" class="wire"/>
+<circle cx="1650" cy="650" r="4" fill="#182b3a"/>
+<text x="1650" y="640" font-size="19" fill="#006b74" text-anchor="start">VCC</text>
+<path d="M1650,650 L1650,665" class="wire"/>
+<circle cx="1643" cy="725" r="35" class="symbol"/>
+<path d="M1600,725 L1630,725" class="wire"/>
+<path d="M1630,705 L1630,745" class="wire"/>
+<path d="M1630,713 L1650,690" class="wire"/>
+<path d="M1650,690 L1650,665" class="wire"/>
+<path d="M1630,737 L1650,760" class="wire"/>
+<path d="M1650,760 L1650,785" class="wire"/>
+<path d="M1634,709 L1638,696 L1645,703 Z" fill="#182b3a"/>
+<text x="1690" y="721" font-size="20" fill="#182b3a" text-anchor="start">Q3</text>
+<text x="1690" y="747" font-size="18" fill="#182b3a" text-anchor="start">BC557</text>
+<text x="1607" y="715" font-size="16" fill="#182b3a" text-anchor="start">B</text>
+<text x="1658" y="680" font-size="16" fill="#182b3a" text-anchor="start">E</text>
+<text x="1658" y="777" font-size="16" fill="#182b3a" text-anchor="start">C</text>
+<circle cx="1485" cy="725" r="4" fill="#182b3a"/>
+<text x="1485" y="715" font-size="19" fill="#006b74" text-anchor="start">OUT</text>
+<path d="M1485,725 L1510,725" class="wire"/>
+<path d="M1510,725 L1522,725" class="wire"/>
+<rect x="1522" y="717" width="46" height="16" class="symbol"/>
+<path d="M1568,725 L1580,725" class="wire"/>
+<text x="1545" y="698" font-size="19" fill="#182b3a" text-anchor="middle">R15 100k</text>
+<path d="M1580,725 L1600,725" class="wire"/>
+<path d="M1650,785 L1650,805" class="wire"/>
+<path d="M1638,805 L1662,805 L1650,827 Z" class="symbol"/>
+<path d="M1636,827 L1664,827" class="wire"/>
+<path d="M1650,827 L1650,847" class="wire"/>
+<text x="1690" y="816" font-size="18" fill="#182b3a" text-anchor="start">LED1</text>
+<text x="1690" y="842" font-size="18" fill="#182b3a" text-anchor="start">green</text>
+<path d="M1667,807 L1680,795" class="wire"/>
+<path d="M1672,818 L1685,806" class="wire"/>
+<path d="M1680,795 l-7,2 l5,5 Z M1685,806 l-7,2 l5,5 Z" fill="#182b3a"/>
+<path d="M1650,847 L1650,859" class="wire"/>
+<rect x="1642" y="859" width="16" height="42" class="symbol"/>
+<path d="M1650,901 L1650,913" class="wire"/>
+<text x="1668" y="874" font-size="20" fill="#182b3a" text-anchor="start">R16</text>
+<text x="1668" y="898" font-size="20" fill="#182b3a" text-anchor="start">1.8k</text>
+<path d="M1650,913 L1650,925" class="wire"/>
+<path d="M1637,925 L1663,925" class="wire"/>
+<path d="M1641,931 L1659,931" class="wire"/>
+<path d="M1646,937 L1654,937" class="wire"/>
+<text x="1485" y="984" font-size="18" fill="#182b3a" text-anchor="start">Low-Vf, efficient green LED</text>
+<text x="1485" y="1012" font-size="18" fill="#182b3a" text-anchor="start">About 0.3–0.6 mA at 3 V</text>
+<text x="30" y="1090" font-size="20" fill="#182b3a" text-anchor="start">Same net labels join electrically. All ground symbols join B1 −. Values are Ω unless stated. Capacitors C1–C4, C6–C7 are nonpolar.</text>
+<text x="30" y="1123" font-size="20" fill="#182b3a" text-anchor="start">Build on 2.54 mm perfboard; keep pickup / Q1 away from LED wiring. Use at ≥2.7 V. Prototype design: physical sensitivity needs testing.</text>
+</svg>
