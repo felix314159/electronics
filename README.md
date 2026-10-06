@@ -5,6 +5,12 @@
 ### attiny_tda
 * Simple two-wire speaker powered by Attiny85 and TDA2822M. Can play 16 different classical melodies.
 
+### FM Radio
+* Goal: Build own vibecoded FM radio using SI4825-A10-CSR and TDA 2822M in BTL mode
+* Project is split into two parts so that I can step-by-step ensure certain parts work:
+    * Speaker Stage (Speaker, TDA, Pot and for now an Arduino Giga as sound source)
+    * FM radio Stage (takes previous project and replaces Arduino with an FM radio source)
+
 ### lm386
 * Simple two-wire speaker powered by Arduino Giga and LM386. 
 
@@ -17,16 +23,15 @@
 
 ## Datalogger
 * Multiple sensors connected to Pico 2 W, data is broadcast to local server which runs visualization website locally.
+* 2 different version of this project (the second version is an improvement as it allows wired Ethernet and software supports multiple loggers)
+
+## Displays
+
+* Waveshare 1.28 inch touchscreen project (micropython driver + example demo + pico 2 w bluetooth touchpad project)
 
 ## Fan Speed Control
 * PWM fan speed control via attiny85 and bjt
 * Non-pwm fan speed control with 555 timer and mosfet
-
-## FM Radio
-* Goal: Build own vibecoded FM radio using SI4825-A10-CSR and TDA 2822M in BTL mode
-* Project is split into two parts so that I can step-by-step ensure certain parts work:
-    * Speaker Stage (Speaker, TDA, Pot and for now an Arduino Giga as sound source)
-    * FM radio Stage (takes previous project and replaces Arduino with an FM radio source)
 
 ## IR
 * Self-built TV remote (only on/off for now) for my Panasonic tv using attiny85 and IR LED
@@ -43,8 +48,14 @@ simple compass shown on small oled screen. works surprising well unless you put 
 
 ## Other
 
-### rotary_encoder_led
+### Attiny85 + Rotary Encoder + 4 LEDs
 * Use rotary encoder, attiny85 and sn74hc595 shift register to select one of four LEDs.
+
+### Dimmable LED with 555 Timer
+* Title says it all
+
+### Ethernet SPI module driver and example code for Pico 2 W
+* Title says it all, contains micropython driver
 
 ## Temp Alarm
 * Attiny and DS18B20 powered active buzzer alarm that beeps at target temp or above (here 34 degrees celsius)
