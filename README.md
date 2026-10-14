@@ -57,5 +57,9 @@ simple compass shown on small oled screen. works surprising well unless you put 
 ### Ethernet SPI module driver and example code for Pico 2 W
 * Title says it all, contains micropython driver
 
+## Storage
+
+* Adafruit microSD micropython driver (uses SDIO mode on pico 2 w)
+
 ## Temp Alarm
 * Attiny and DS18B20 powered active buzzer alarm that beeps at target temp or above (here 34 degrees celsius)
