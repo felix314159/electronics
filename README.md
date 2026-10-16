@@ -29,10 +29,6 @@
 
 * Waveshare 1.28 inch touchscreen project (micropython driver + example demo + pico 2 w bluetooth touchpad project)
 
-## Fan Speed Control
-* PWM fan speed control via attiny85 and bjt
-* Non-pwm fan speed control with 555 timer and mosfet
-
 ## IR
 * Self-built TV remote (only on/off for now) for my Panasonic tv using attiny85 and IR LED
 
@@ -45,6 +41,15 @@ linear 5v hall sensor for easily measuring strength of nearby magnet (important 
 ### lis3mdl compass
 
 simple compass shown on small oled screen. works surprising well unless you put a magnet very close
+
+## Motors and Fans
+
+### Fan Speed Control
+* PWM fan speed control via attiny85 and bjt
+* Non-pwm fan speed control with 555 timer and mosfet
+
+### Servo
+* Control two servo motors with your Pico
 
 ## Other
 
