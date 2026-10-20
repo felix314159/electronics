@@ -62,6 +62,9 @@ simple compass shown on small oled screen. works surprising well unless you put 
 ### Ethernet SPI module driver and example code for Pico 2 W
 * Title says it all, contains micropython driver
 
+### Induction LED
+* Showcases how to power an LED via electromagnetic induction through magnetic coupling between two coils
+
 ## Storage
 
 * Adafruit microSD micropython driver (uses SDIO mode on pico 2 w)
