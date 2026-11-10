@@ -68,6 +68,7 @@ simple compass shown on small oled screen. works surprising well unless you put 
 ## Storage
 
 * Adafruit microSD micropython driver (uses SDIO mode on pico 2 w)
+* Adafruit FRAM (1895) micropython driver with demo and benchmark
 
 ## Temp Alarm
 * Attiny and DS18B20 powered active buzzer alarm that beeps at target temp or above (here 34 degrees celsius)
