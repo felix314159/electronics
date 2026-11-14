@@ -122,6 +122,15 @@ remove the white protective membrane on the sensor.
 
 With both I2C sensors connected, an I2C scan should report `0x48` and `0x62`.
 
+---
+
+Note: Adafruit are product selling geniuses: They tell you to cut the LED trace
+and then route the VCC trace 1mm near to that location. So if you just slightly mess up
+the sensor won't work anymore. The fix is to then connect the right side of the C4 cap directly
+to VIN, as shown below:
+
+![Fix](./fix.png)
+
 ### W5500 Ethernet module
 
 Product: <https://www.berrybase.de/w5500-spi-ethernet-modul>
