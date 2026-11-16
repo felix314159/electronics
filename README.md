@@ -65,6 +65,10 @@ simple compass shown on small oled screen. works surprising well unless you put 
 ### Induction LED
 * Showcases how to power an LED via electromagnetic induction through magnetic coupling between two coils
 
+### Relay Flyback
+
+* Demonstrates why u should use flyback diodes when working with e.g. relays. Requires an oscilloscope so that you can see the demonstrated effect.
+
 ## Storage
 
 * Adafruit microSD micropython driver (uses SDIO mode on pico 2 w)
