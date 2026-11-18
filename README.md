@@ -14,6 +14,9 @@
 ### lm386
 * Simple two-wire speaker powered by Arduino Giga and LM386. 
 
+## Clock
+* 4-digit clock + rotary encoder for setting time + attiny85 with external 32 kHz crystal
+
 ## Coil Switching LED Indicator
 
 * Device you hold near a coil to see if it is switching or not.
