@@ -65,6 +65,9 @@ simple compass shown on small oled screen. works surprising well unless you put 
 ### Ethernet SPI module driver and example code for Pico 2 W
 * Title says it all, contains micropython driver
 
+### Gameboy USB-C
+* Just using a USB-C breakout and an adafruit buck (with a small mod) you can power your Gameboy Advance SP and your DS with any USB-C phone charger
+
 ### Induction LED
 * Showcases how to power an LED via electromagnetic induction through magnetic coupling between two coils
 
